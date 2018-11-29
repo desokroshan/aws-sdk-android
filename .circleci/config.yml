@@ -1,0 +1,91 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-27-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "build.gradle" }}
+#      - run:
+#         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+#         command: sudo chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: |
+            bash gradlew androidDependencies
+
+        - run:
+          name: build
+          command: |
+            bash gradlew build
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "build.gradle" }}
+      - run:
+          name: Run Tests
+          command: bash gradlew lint test
+      - store_artifacts:
+          path: build/reports
+          destination: reports
+      - store_test_results:
+          path: build/test-results
+  test0:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-25-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - run:
+          name: step1
+          command: echo "step1"
+
+  test1:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-25-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - run:
+          name: step1
+          command: echo "step1"
+
+  test2:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-25-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - run:
+          name: step1
+          command: echo "step1"
+
+
+workflows:
+  version: 2
+  myworkflow: 
+    jobs:
+      - test0:
+          filters:
+            branches:             
+              only: xxx          
+      - test1:
+          requires:
+            - test0  
+      - test2:
+          requires:
+            - test1                  
+
+  build_and_test:
+    jobs:
+      - build
+
+
