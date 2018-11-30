@@ -11,13 +11,11 @@ jobs:
       - run:
           name: create awsconfiguration.json
           command: |
-            echo ${awsconfiguration}
             echo ${awsconfiguration} | base64 -di >> awsconfiguration.json
-            cat awsconfiguration.json
       - run:
           name: runInstrumentationTest
           command: |
-            bash
+            bash circleciscript.sh
 workflows:
   version: 2
 
