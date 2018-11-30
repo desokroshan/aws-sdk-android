@@ -11,6 +11,7 @@ jobs:
       - run:
           name: create awsconfiguration.json
           command: |
+            echo ${awsconfiguration}
             echo ${awsconfiguration} | base64 --decode >> awsconfiguration.json
             cat awsconfiguration.json
       - run:
