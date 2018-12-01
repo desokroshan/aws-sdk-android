@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: Wait for emulator
-          command: ./android-wait-for-boot.sh
+          command: ./wait-for-emulator-boot.sh
           environment:
             TERM: dumb
 
