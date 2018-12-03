@@ -25,8 +25,8 @@ jobs:
             TERM: dumb
 
       - run:
-          name: Create avd
-          command: which emulator
+          name: Inatall libpulse0
+          command: apt-get install libpulse0:i386
 
       - run:
           name: Start emulator
