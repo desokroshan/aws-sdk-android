@@ -30,7 +30,7 @@ jobs:
 
       - run:
           name: Start emulator
-          command: emulator -avd testEmulator -no-audio -no-window
+          command: /opt/android/sdk/emulator/emulator -avd testEmulator -no-audio -no-window
           background: true
           environment:
             TERM: dumb
