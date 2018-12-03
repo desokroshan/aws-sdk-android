@@ -21,9 +21,12 @@ jobs:
       - run:
           name: Create avd
           command: echo no | avdmanager create avd -n testEmulator -k "system-images;android-24;default;armeabi-v7a"
-                   which emulator
           environment:
             TERM: dumb
+
+      - run:
+          name: Create avd
+          command: which emulator
 
       - run:
           name: Start emulator
